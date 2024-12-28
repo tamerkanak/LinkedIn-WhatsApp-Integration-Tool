@@ -86,7 +86,7 @@ def start_process(email, password, status_label, qr_label):
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920x1080")
     
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(options=chrome_options)
     driver.maximize_window()
 
     try:

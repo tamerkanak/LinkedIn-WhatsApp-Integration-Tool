@@ -283,9 +283,45 @@ def create_gui():
         "<Configure>",
         lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
     )
-    
+
     canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
     canvas.configure(yscrollcommand=scrollbar.set)
+
+    # Sohbet adı girişi
+    chat_input_frame = tk.Frame(scrollable_frame)
+    chat_input_frame.pack(pady=10)
+
+    tk.Label(
+        chat_input_frame,
+        text="Hangi sohbetten LinkedIn profillerini çekmek istiyorsanız sohbetin adını girin:",
+        font=("Arial", 10, "bold"),
+        wraplength=500,
+        justify="left"
+    ).pack(pady=5)
+
+    chat_name_entry = tk.Entry(chat_input_frame, width=40)
+    chat_name_entry.pack(pady=5)
+
+    # Sohbet adı kaydetme butonu
+    def set_chat_name():
+        chat_name = chat_name_entry.get()
+        if chat_name:
+            status_label.config(text=f"Dinlenecek sohbet: {chat_name}", fg="green")
+            return chat_name
+        else:
+            status_label.config(text="Lütfen bir sohbet adı girin.", fg="red")
+            return None
+
+    chat_name_button = tk.Button(
+        chat_input_frame,
+        text="Sohbet Adını Ayarla",
+        font=("Arial", 10, "bold"),
+        bg="#00a650",
+        fg="white",
+        width=20,
+        command=set_chat_name
+    )
+    chat_name_button.pack(pady=10)
     
     # Açıklama metni
     description_text = """

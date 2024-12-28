@@ -1,118 +1,78 @@
-# LinkedIn-WhatsApp Integration Tool
+# WhatsApp ve LinkedIn Entegrasyonu
 
-## Overview
-This tool integrates WhatsApp and LinkedIn to streamline connection requests. By listening to WhatsApp messages for LinkedIn profile links, the application automatically sends connection requests on LinkedIn. The GUI enables users to monitor and manage the integration process easily.
+Bu proje, WhatsApp üzerinden gelen LinkedIn bağlantılarını otomatik olarak işlemek ve bağlantı istekleri göndermek için geliştirilmiş bir Python uygulamasıdır. Uygulama, bir GUI (Grafiksel Kullanıcı Arayüzü) üzerinden çalışır ve Selenium kütüphanesi kullanılarak web otomasyon işlemlerini gerçekleştirir.
 
----
+## Özellikler
 
-## Features
+- WhatsApp Web üzerinden gelen LinkedIn profili bağlantılarını tarama.
+- LinkedIn bağlantı isteklerini otomatik olarak gönderme.
+- Kullanıcı dostu bir GUI ile kolay kullanım.
 
-- **WhatsApp Web QR Code Integration**: Connects to WhatsApp Web and captures QR code for authentication.
-- **LinkedIn Connection Requests**: Automates sending LinkedIn connection requests for profiles shared via WhatsApp messages.
-- **Real-Time Status Updates**: Displays the current status of processes in the GUI.
-- **Error Handling**: Provides detailed error messages and warnings for seamless troubleshooting.
+## Kullanım Talimatları
 
----
+### Gereksinimler
 
-## Installation
+Bu projeyi çalıştırmak için aşağıdaki yazılımların sisteminizde kurulu olması gerekir:
 
-### Prerequisites
+- Python 3.8 veya üstü
+- Google Chrome tarayıcısı
+- ChromeDriver (Google Chrome sürümünüzle uyumlu olan)
+- Gerekli Python kütüphaneleri:
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-- Python 3.8 or higher
-- Google Chrome browser
-- ChromeDriver compatible with the installed Chrome version
+### Adımlar
 
-### Dependencies
-Install the required Python libraries:
+1. **LinkedIn Hesap Bilgilerini Girin**: Uygulama, LinkedIn hesabınıza giriş yapmak için e-posta adresinizi ve şifrenizi gerektirir.
+2. **Uygulamayı Başlatın**: Başlat butonuna tıklayarak uygulamayı çalıştırın.
+3. **WhatsApp Web QR Kodunu Okutun**: Görüntülenen QR kodunu taratarak WhatsApp Web'e bağlanın.
+4. **Mesajları Dinleyin**: Uygulama, seçili sohbeti dinleyerek LinkedIn bağlantılarını tespit eder ve işlem yapar.
 
-```bash
-pip install selenium pillow tkinter
+### Önemli Not
+
+Bu uygulama, LinkedIn oturum açtıktan sonra karşılaşılan doğrulama adımlarını (örneğin, CAPTCHA veya ikinci faktör doğrulama) otomatik olarak geçememektedir. Eğer uygulama hata veriyorsa:
+
+- `start_process()` fonksiyonundaki **headless modunu kapatın**.
+- Doğrulamayı manuel olarak çözün.
+- Bu adımlardan sonra uygulama düzgün bir şekilde çalışmaya devam edecektir.
+
+Headless modunu kapatmak için aşağıdaki adımları izleyin:
+
+```python
+# Headless mod için seçenekler oluştur (aktif olan kısmı yoruma alın veya kaldırın)
+"""
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--window-size=1920x1080")
+"""
 ```
 
----
+## Nasıl Çalışır?
 
-## Usage Instructions
+1. Uygulama, WhatsApp Web'den QR kodunu alır ve GUI'de görüntüler.
+2. LinkedIn'e giriş yapar ve gelen LinkedIn bağlantılarını işler.
+3. Tespit edilen bağlantılara otomatik olarak bağlantı isteği gönderir.
 
-### Steps to Run the Application
-1. Clone the repository or download the script.
-2. Ensure that ChromeDriver is in your system's PATH.
-3. Run the script using:
-   ```bash
-   python script_name.py
-   ```
-4. Enter your LinkedIn email and password in the GUI.
-5. Scan the displayed QR code using WhatsApp Web.
-6. The program will start listening for LinkedIn profile links in the specified WhatsApp chat and send connection requests automatically.
+## GUI Kullanımı
 
-### Key Functionalities
+Uygulama, kullanıcı dostu bir arayüze sahiptir ve tüm işlemleri kolayca gerçekleştirmenizi sağlar:
 
-#### GUI Overview
-- **Title Bar**: Displays the application name.
-- **Developer Information**: Credits the creator of the tool.
-- **LinkedIn Login**: Accepts email and password for LinkedIn.
-- **Status Section**: Provides updates on current operations.
-- **QR Code Display**: Shows the QR code for WhatsApp Web authentication.
+- LinkedIn giriş bilgilerini girin.
+- QR kodu taratın.
+- Durum bildirimlerini ve ilerlemeyi GUI üzerinden takip edin.
 
-#### Automated Processes
-- Listens to a specific WhatsApp chat for LinkedIn profile links.
-- Processes messages to extract LinkedIn profile URLs.
-- Sends connection requests on LinkedIn for valid profile links.
+## Sorun Giderme
 
----
+- **Doğrulama Adımları:** LinkedIn girişinde doğrulama adımlarıyla karşılaşırsanız, doğrulamayı manuel olarak tamamlayın.
+- **Bağlantı Gönderilemedi Hatası:** Belirli profillere daha önce bağlantı isteği gönderilmiş olabilir. Uygulama bu durumlarda ilgili profil hakkında bilgi verecektir.
 
-## Code Structure
+## Katkıda Bulunma
 
-### Key Functions
+Projeye katkıda bulunmak isterseniz lütfen bir pull request gönderin veya [geliştirici ile iletişime geçin](mailto\:tamerkanak75@gmail.com).
 
-#### `generate_qr_image(driver, qr_label)`
-Captures and displays the WhatsApp Web QR code in the GUI.
+## Lisans
 
-#### `select_chat(driver, chat_name, status_label)`
-Selects a specific chat in WhatsApp Web by its name.
-
-#### `process_messages(driver, status_label, processed_links, email)`
-Monitors messages for LinkedIn links and processes them.
-
-#### `start_process(email, password, status_label, qr_label)`
-Initiates the program, logs into LinkedIn, and starts listening to WhatsApp messages.
-
-#### `send_connection_request(driver, profile_url, email, status_label)`
-Handles sending connection requests on LinkedIn.
-
-#### `create_gui()`
-Sets up and displays the graphical user interface.
-
-### Additional Features
-- **Error Handling**: Includes `try-except` blocks to catch and report errors during execution.
-- **Threading**: Runs processes in the background to keep the GUI responsive.
-- **Scroll Support**: Enables smooth navigation in the GUI for lengthy content.
-
----
-
-## Limitations
-
-- Requires manual WhatsApp Web authentication for each session.
-- Limited to the specific chat name defined in the code.
-- May need updates to accommodate changes in LinkedIn or WhatsApp Web interfaces.
-
----
-
-## Future Enhancements
-
-- Add support for multiple chats.
-- Implement OAuth for LinkedIn login.
-- Include advanced error reporting and logging.
-
----
-
-## License
-This tool is licensed under the MIT License. Feel free to use and modify it as needed.
-
----
-
-## Developer
-**Tamer Kanak**  
-Email: tamerkanak75@gmail.com
-
-For any issues or contributions, please contact the developer or submit a pull request on GitHub.
+© 2024 Tüm hakları saklıdır. Bu yazılımın izinsiz kopyalanması veya dağıtılması yasaktır.
 

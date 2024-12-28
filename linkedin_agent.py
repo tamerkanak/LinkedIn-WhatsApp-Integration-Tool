@@ -79,13 +79,13 @@ def start_process(email, password, status_label, qr_label):
     Programı başlatan ve WhatsApp Web'e bağlanan fonksiyon.
     """
     status_label.config(text="LinkedIn'e giriş yapılıyor...")
-    """
+    
     # Headless mod için seçenekler oluştur
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-gpu")
     chrome_options.add_argument("--window-size=1920x1080")
-    """
+    
     driver = webdriver.Chrome()
     driver.maximize_window()
 
